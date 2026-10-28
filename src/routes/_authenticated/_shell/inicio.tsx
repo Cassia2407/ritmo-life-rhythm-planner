@@ -68,7 +68,7 @@ function Inicio() {
     <div>
       <div className="mb-8 flex flex-wrap items-end justify-between gap-3">
         <div>
-          <p className="text-sm capitalize text-muted-foreground">{formatDateLong(now)}</p>
+          <p className="text-sm text-muted-foreground first-letter:uppercase">{formatDateLong(now)}</p>
           <h1 className="mt-1 text-2xl font-semibold tracking-tight md:text-3xl">
             {greeting(now.getHours())}
             {firstName ? `, ${firstName}` : ""}.
