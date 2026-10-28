@@ -8,7 +8,7 @@ export function PageHeader({
   actions,
 }: {
   title: string;
-  description?: string;
+  description?: string | undefined;
   actions?: ReactNode;
 }) {
   return (
@@ -31,7 +31,7 @@ export function Panel({
   title?: ReactNode;
   action?: ReactNode;
   children: ReactNode;
-  className?: string;
+  className?: string | undefined;
 }) {
   return (
     <section className={cn("rounded-xl border bg-card p-5 shadow-soft", className)}>
@@ -55,7 +55,7 @@ export function EmptyState({
 }: {
   icon: LucideIcon;
   title: string;
-  description?: string;
+  description?: string | undefined;
   action?: ReactNode;
   compact?: boolean;
 }) {
@@ -76,7 +76,7 @@ export function EmptyState({
   );
 }
 
-export function CategoryDot({ color, className }: { color?: string | null; className?: string }) {
+export function CategoryDot({ color, className }: { color?: string | null | undefined; className?: string }) {
   return (
     <span
       aria-hidden

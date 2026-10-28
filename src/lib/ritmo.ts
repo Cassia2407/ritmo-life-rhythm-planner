@@ -35,6 +35,7 @@ export const GOAL_STATUS_LABEL: Record<GoalStatus, string> = {
 
 export const WEEKDAYS_SHORT = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
 
+export const DEFAULT_CATEGORY_COLOR = "#789FCB";
 export const CATEGORY_COLORS = [
   "#789FCB",
   "#A8C5B0",

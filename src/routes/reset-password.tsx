@@ -28,12 +28,12 @@ function ResetPassword() {
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (password.length < 6) return toast.error("A senha precisa ter pelo menos 6 caracteres.");
-    if (password !== confirm) return toast.error("As senhas não coincidem.");
+    if (password.length < 6) { toast.error("A senha precisa ter pelo menos 6 caracteres."); return; }
+    if (password !== confirm) { toast.error("As senhas não coincidem."); return; }
     setLoading(true);
     const { error } = await supabase.auth.updateUser({ password });
     setLoading(false);
-    if (error) return toast.error("Não foi possível redefinir", { description: error.message });
+    if (error) { toast.error("Não foi possível redefinir", { description: error.message }); return; }
     toast.success("Senha atualizada");
     navigate({ to: "/inicio", replace: true });
   }

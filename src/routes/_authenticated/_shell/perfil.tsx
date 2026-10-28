@@ -26,7 +26,7 @@ function Perfil() {
 
   async function save(e: React.FormEvent) {
     e.preventDefault();
-    if (!name.trim()) return toast.error("Informe seu nome.");
+    if (!name.trim()) { toast.error("Informe seu nome."); return; }
     setSaving(true);
     try {
       await updateDisplayName(profile.id, name.trim());

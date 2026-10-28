@@ -180,7 +180,7 @@ function Inicio() {
   );
 }
 
-function Stat({ label, value, hint }: { label: string; value: number; hint?: string }) {
+function Stat({ label, value, hint }: { label: string; value: number; hint?: string | undefined }) {
   return (
     <div className="rounded-xl border bg-card p-5 shadow-soft">
       <p className="text-sm text-muted-foreground">{label}</p>

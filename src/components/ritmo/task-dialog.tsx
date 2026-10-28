@@ -258,7 +258,7 @@ function TaskFormDialog({
   const [priority, setPriority] = useState<Priority>((t?.priority as Priority) ?? "media");
   const [tags, setTags] = useState<string[]>(t?.tags ?? []);
   const [tagInput, setTagInput] = useState("");
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<Partial<Record<"title" | "dueDate" | "end", string>>>({});
   const [saving, setSaving] = useState(false);
 
   const knownTags = useMemo(
@@ -274,7 +274,7 @@ function TaskFormDialog({
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    const errs: Record<string, string> = {};
+    const errs: Partial<Record<"title" | "dueDate" | "end", string>> = {};
     if (!title.trim()) errs.title = "Informe um título.";
     if (title.length > 200) errs.title = "Use até 200 caracteres.";
     if ((start || end) && !dueDate) errs.dueDate = "Escolha uma data para usar horários.";
@@ -481,8 +481,8 @@ export function Field({
   children,
 }: {
   label: string;
-  error?: string;
-  htmlFor?: string;
+  error?: string | undefined;
+  htmlFor?: string | undefined;
   children: ReactNode;
 }) {
   return (

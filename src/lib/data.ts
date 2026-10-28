@@ -21,7 +21,7 @@ export const profileQuery = queryOptions({
     return {
       id: user.id,
       email: user.email ?? "",
-      displayName: data?.display_name ?? (user.user_metadata?.display_name as string | undefined) ?? "",
+      displayName: data?.display_name ?? (user.user_metadata?.["display_name"] as string | undefined) ?? "",
     };
   },
 });

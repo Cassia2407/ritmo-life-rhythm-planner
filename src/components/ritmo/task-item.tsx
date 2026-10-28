@@ -10,7 +10,7 @@ export function TaskItem({
   showDate = true,
 }: {
   task: Task;
-  category?: Category;
+  category?: Category | undefined;
   showDate?: boolean;
 }) {
   const { toggle, openDetails, openForm, askDelete } = useTaskDialog();

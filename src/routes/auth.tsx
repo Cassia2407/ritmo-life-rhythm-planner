@@ -10,8 +10,8 @@ import { lovable } from "@/integrations/lovable";
 type Mode = "signin" | "signup" | "forgot";
 
 export const Route = createFileRoute("/auth")({
-  validateSearch: (s: Record<string, unknown>): { mode?: Mode } => ({
-    mode: s.mode === "signup" || s.mode === "forgot" ? s.mode : undefined,
+  validateSearch: (s: Record<string, unknown>): { mode?: Mode | undefined } => ({
+    mode: s["mode"] === "signup" || s["mode"] === "forgot" ? s["mode"] : undefined,
   }),
   head: () => ({
     meta: [
@@ -49,10 +49,10 @@ function AuthPage() {
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     setNotice(null);
-    if (!/^\S+@\S+\.\S+$/.test(email)) return toast.error("Informe um e-mail válido.");
+    if (!/^\S+@\S+\.\S+$/.test(email)) { toast.error("Informe um e-mail válido."); return; }
     if (mode !== "forgot" && password.length < 6)
-      return toast.error("A senha precisa ter pelo menos 6 caracteres.");
-    if (mode === "signup" && !name.trim()) return toast.error("Informe seu nome.");
+      { toast.error("A senha precisa ter pelo menos 6 caracteres."); return; }
+    if (mode === "signup" && !name.trim()) { toast.error("Informe seu nome."); return; }
 
     setLoading(true);
     try {

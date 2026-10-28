@@ -20,7 +20,7 @@ import {
   updateTagAcrossTasks,
   useInvalidate,
 } from "@/lib/data";
-import { CATEGORY_COLORS, type Category } from "@/lib/ritmo";
+import { CATEGORY_COLORS, DEFAULT_CATEGORY_COLOR, type Category } from "@/lib/ritmo";
 import { applyTheme, getStoredTheme, type Theme } from "@/lib/theme";
 import { cn } from "@/lib/utils";
 import { pageHead } from "@/lib/seo";
@@ -102,23 +102,23 @@ function CategoriesPanel() {
   const { data: categories } = useSuspenseQuery(categoriesQuery);
   const invalidate = useInvalidate();
   const [name, setName] = useState("");
-  const [color, setColor] = useState(CATEGORY_COLORS[0]);
+  const [color, setColor] = useState(DEFAULT_CATEGORY_COLOR);
   const [editing, setEditing] = useState<Category | null>(null);
   const [toDelete, setToDelete] = useState<Category | null>(null);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     const n = name.trim();
-    if (!n) return toast.error("Dê um nome à categoria.");
+    if (!n) { toast.error("Dê um nome à categoria."); return; }
     if (categories.some((c) => c.name.toLowerCase() === n.toLowerCase() && c.id !== editing?.id))
-      return toast.error("Já existe uma categoria com esse nome.");
+      { toast.error("Já existe uma categoria com esse nome."); return; }
     try {
       await saveCategory({ name: n, color }, editing?.id);
       await invalidate("categories");
       toast.success(editing ? "Categoria atualizada" : "Categoria criada");
       setName("");
       setEditing(null);
-      setColor(CATEGORY_COLORS[0]);
+      setColor(DEFAULT_CATEGORY_COLOR);
     } catch (err) {
       toast.error("Não foi possível salvar", { description: (err as Error).message });
     }

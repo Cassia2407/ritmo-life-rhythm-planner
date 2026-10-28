@@ -133,7 +133,7 @@ function Habitos() {
                         : h.week_days
                             .slice()
                             .sort()
-                            .map((d) => WEEKDAYS_SHORT[d])
+                            .map((d) => WEEKDAYS_SHORT[d] ?? "")
                             .join(", ")}
                       {!scheduledToday && " · não programado para hoje"}
                     </p>
@@ -155,7 +155,7 @@ function Habitos() {
                       const sched = isHabitScheduled(h, d);
                       return (
                         <div key={key} className="flex flex-col items-center gap-1">
-                          <span className="text-[10px] text-muted-foreground">{WEEKDAYS_SHORT[d.getDay()].slice(0, 1)}</span>
+                          <span className="text-[10px] text-muted-foreground">{(WEEKDAYS_SHORT[d.getDay()] ?? "").slice(0, 1)}</span>
                           {sched ? (
                             <HabitCheck
                               size="sm"
@@ -220,12 +220,12 @@ function HabitForm({ initial, onClose }: { initial: { habit?: Habit; name?: stri
   const [frequency, setFrequency] = useState(h?.frequency ?? "diaria");
   const [days, setDays] = useState<number[]>(h?.week_days ?? []);
   const [startDate, setStartDate] = useState(h?.start_date ?? toISODate(new Date()));
-  const [errors, setErrors] = useState<Record<string, string>>({});
+  const [errors, setErrors] = useState<Partial<Record<"name" | "days" | "start", string>>>({});
   const [saving, setSaving] = useState(false);
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    const errs: Record<string, string> = {};
+    const errs: Partial<Record<"name" | "days" | "start", string>> = {};
     if (!name.trim()) errs.name = "Informe um nome.";
     if (frequency === "dias_especificos" && days.length === 0) errs.days = "Escolha pelo menos um dia.";
     if (!startDate) errs.start = "Informe a data de início.";
