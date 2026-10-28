@@ -96,7 +96,11 @@ function AuthPage() {
           ? "E-mail ou senha incorretos."
           : msg.includes("already registered")
             ? "Este e-mail já tem uma conta. Tente entrar."
-            : msg,
+            : msg.toLowerCase().includes("weak") || msg.toLowerCase().includes("pwned")
+              ? "Essa senha é muito comum ou já apareceu em vazamentos. Escolha outra."
+              : msg.includes("Email not confirmed")
+                ? "Confirme seu e-mail pelo link que enviamos antes de entrar."
+                : msg,
       );
     } finally {
       setLoading(false);
