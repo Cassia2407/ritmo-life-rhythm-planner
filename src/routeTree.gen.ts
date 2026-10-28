@@ -10,33 +10,94 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as AuthenticatedShellRouteRouteImport } from './routes/_authenticated/_shell/route'
+import { Route as AuthenticatedShellInicioRouteImport } from './routes/_authenticated/_shell/inicio'
+import { Route as AuthenticatedShellTarefasRouteImport } from './routes/_authenticated/_shell/tarefas'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedShellRouteRoute = AuthenticatedShellRouteRouteImport.update({
+  id: '/_shell',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedShellInicioRoute =
+  AuthenticatedShellInicioRouteImport.update({
+    id: '/inicio',
+    path: '/inicio',
+    getParentRoute: () => AuthenticatedShellRouteRoute,
+  } as any)
+const AuthenticatedShellTarefasRoute =
+  AuthenticatedShellTarefasRouteImport.update({
+    id: '/tarefas',
+    path: '/tarefas',
+    getParentRoute: () => AuthenticatedShellRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/inicio': typeof AuthenticatedShellInicioRoute
+  '/tarefas': typeof AuthenticatedShellTarefasRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/inicio': typeof AuthenticatedShellInicioRoute
+  '/tarefas': typeof AuthenticatedShellTarefasRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/_authenticated/_shell': typeof AuthenticatedShellRouteRouteWithChildren
+  '/_authenticated/_shell/inicio': typeof AuthenticatedShellInicioRoute
+  '/_authenticated/_shell/tarefas': typeof AuthenticatedShellTarefasRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths: '/' | '/auth' | '/reset-password' | '/inicio' | '/tarefas'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to: '/' | '/auth' | '/reset-password' | '/inicio' | '/tarefas'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/reset-password'
+    | '/_authenticated/_shell'
+    | '/_authenticated/_shell/inicio'
+    | '/_authenticated/_shell/tarefas'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +109,83 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/_shell': {
+      id: '/_authenticated/_shell'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedShellRouteRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/_shell/inicio': {
+      id: '/_authenticated/_shell/inicio'
+      path: '/inicio'
+      fullPath: '/inicio'
+      preLoaderRoute: typeof AuthenticatedShellInicioRouteImport
+      parentRoute: typeof AuthenticatedShellRouteRoute
+    }
+    '/_authenticated/_shell/tarefas': {
+      id: '/_authenticated/_shell/tarefas'
+      path: '/tarefas'
+      fullPath: '/tarefas'
+      preLoaderRoute: typeof AuthenticatedShellTarefasRouteImport
+      parentRoute: typeof AuthenticatedShellRouteRoute
+    }
   }
 }
 
+interface AuthenticatedShellRouteRouteChildren {
+  AuthenticatedShellInicioRoute: typeof AuthenticatedShellInicioRoute
+  AuthenticatedShellTarefasRoute: typeof AuthenticatedShellTarefasRoute
+}
+
+const AuthenticatedShellRouteRouteChildren: AuthenticatedShellRouteRouteChildren =
+  {
+    AuthenticatedShellInicioRoute: AuthenticatedShellInicioRoute,
+    AuthenticatedShellTarefasRoute: AuthenticatedShellTarefasRoute,
+  }
+
+const AuthenticatedShellRouteRouteWithChildren =
+  AuthenticatedShellRouteRoute._addFileChildren(
+    AuthenticatedShellRouteRouteChildren,
+  )
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedShellRouteRoute: typeof AuthenticatedShellRouteRouteWithChildren
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedShellRouteRoute: AuthenticatedShellRouteRouteWithChildren,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
