@@ -7,13 +7,7 @@ import { EmptyState, Panel, ProgressBar } from "@/components/ritmo/ui-bits";
 import { TaskItem } from "@/components/ritmo/task-item";
 import { HabitCheck } from "@/components/ritmo/habit-check";
 import { useTaskDialog } from "@/components/ritmo/task-dialog";
-import {
-  categoriesQuery,
-  habitLogsQuery,
-  habitsQuery,
-  profileQuery,
-  tasksQuery,
-} from "@/lib/data";
+import { categoriesQuery, habitLogsQuery, habitsQuery, profileQuery, tasksQuery } from "@/lib/data";
 import { formatDateLong, isHabitScheduled, isOverdue, sortByTime, toISODate } from "@/lib/ritmo";
 import { pageHead } from "@/lib/seo";
 
@@ -47,12 +41,16 @@ function Inicio() {
   const catById = useMemo(() => new Map(categories.map((c) => [c.id, c])), [categories]);
 
   const pending = tasks.filter((t) => t.status === "pendente");
-  const doneToday = tasks.filter((t) => t.completed_at && toISODate(new Date(t.completed_at)) === today);
+  const doneToday = tasks.filter(
+    (t) => t.completed_at && toISODate(new Date(t.completed_at)) === today,
+  );
   const overdue = pending.filter((t) => isOverdue(t, now));
   const dueToday = tasks.filter((t) => t.due_date === today);
   const upcoming = pending
     .filter((t) => t.due_date && t.due_date >= today)
-    .sort((a, b) => (a.due_date! === b.due_date! ? sortByTime(a, b) : a.due_date!.localeCompare(b.due_date!)))
+    .sort((a, b) =>
+      a.due_date! === b.due_date! ? sortByTime(a, b) : a.due_date!.localeCompare(b.due_date!),
+    )
     .slice(0, 5);
 
   const todaysHabits = habits.filter((h) => isHabitScheduled(h, now));
@@ -100,7 +98,11 @@ function Inicio() {
       ) : (
         <div className="grid gap-4 lg:grid-cols-3">
           <div className="grid grid-cols-2 gap-4 lg:col-span-3 lg:grid-cols-3">
-            <Stat label="Tarefas pendentes" value={pending.length} hint={overdue.length ? `${overdue.length} atrasada(s)` : undefined} />
+            <Stat
+              label="Tarefas pendentes"
+              value={pending.length}
+              hint={overdue.length ? `${overdue.length} atrasada(s)` : undefined}
+            />
             <Stat label="Concluídas hoje" value={doneToday.length} />
             <div className="col-span-2 rounded-xl border bg-card p-5 shadow-soft lg:col-span-1">
               <p className="text-sm text-muted-foreground">Progresso de hoje</p>
@@ -122,7 +124,10 @@ function Inicio() {
             className="lg:col-span-2"
             title="Próximas atividades"
             action={
-              <Link to="/tarefas" className="inline-flex items-center gap-1 text-xs text-primary hover:underline">
+              <Link
+                to="/tarefas"
+                className="inline-flex items-center gap-1 text-xs text-primary hover:underline"
+              >
                 Ver todas as tarefas <ArrowRight className="h-3 w-3" />
               </Link>
             }
@@ -132,7 +137,11 @@ function Inicio() {
                 compact
                 icon={CalendarCheck}
                 title="Nenhuma atividade agendada"
-                description={overdue.length ? "Há tarefas atrasadas na sua lista." : "Adicione uma atividade com data para vê-la aqui."}
+                description={
+                  overdue.length
+                    ? "Há tarefas atrasadas na sua lista."
+                    : "Adicione uma atividade com data para vê-la aqui."
+                }
               />
             ) : (
               <div className="space-y-2">

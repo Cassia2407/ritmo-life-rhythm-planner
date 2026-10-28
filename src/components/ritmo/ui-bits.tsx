@@ -76,11 +76,20 @@ export function EmptyState({
   );
 }
 
-export function CategoryDot({ color, className }: { color?: string | null | undefined; className?: string }) {
+export function CategoryDot({
+  color,
+  className,
+}: {
+  color?: string | null | undefined;
+  className?: string;
+}) {
   return (
     <span
       aria-hidden
-      className={cn("inline-block h-2.5 w-2.5 shrink-0 rounded-full bg-muted-foreground/40", className)}
+      className={cn(
+        "inline-block h-2.5 w-2.5 shrink-0 rounded-full bg-muted-foreground/40",
+        className,
+      )}
       style={color ? { backgroundColor: color } : undefined}
     />
   );

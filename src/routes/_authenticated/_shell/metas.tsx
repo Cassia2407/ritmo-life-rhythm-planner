@@ -35,12 +35,19 @@ import {
   tasksQuery,
   useInvalidate,
 } from "@/lib/data";
-import { GOAL_STATUS_LABEL, formatDateShort, goalProgress, type Goal, type GoalStatus } from "@/lib/ritmo";
+import {
+  GOAL_STATUS_LABEL,
+  formatDateShort,
+  goalProgress,
+  type Goal,
+  type GoalStatus,
+} from "@/lib/ritmo";
 import { cn } from "@/lib/utils";
 import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/_authenticated/_shell/metas")({
-  head: () => pageHead("Metas e projetos", "Acompanhe metas com progresso baseado nas suas tarefas."),
+  head: () =>
+    pageHead("Metas e projetos", "Acompanhe metas com progresso baseado nas suas tarefas."),
   component: Metas,
 });
 
@@ -98,7 +105,9 @@ function Metas() {
                       {GOAL_STATUS_LABEL[g.status as GoalStatus]}
                     </span>
                     <h2 className="font-semibold">{g.title}</h2>
-                    {g.description && <p className="mt-1 text-sm text-muted-foreground">{g.description}</p>}
+                    {g.description && (
+                      <p className="mt-1 text-sm text-muted-foreground">{g.description}</p>
+                    )}
                     {g.deadline && (
                       <p className="mt-1 inline-flex items-center gap-1 text-xs text-muted-foreground">
                         <CalendarDays className="h-3 w-3" /> Até {formatDateShort(g.deadline)}
@@ -106,10 +115,20 @@ function Metas() {
                     )}
                   </div>
                   <div className="flex shrink-0 gap-0.5">
-                    <button type="button" aria-label={`Editar ${g.title}`} onClick={() => setForm({ goal: g })} className="rounded-md p-1.5 text-muted-foreground hover:bg-secondary">
+                    <button
+                      type="button"
+                      aria-label={`Editar ${g.title}`}
+                      onClick={() => setForm({ goal: g })}
+                      className="rounded-md p-1.5 text-muted-foreground hover:bg-secondary"
+                    >
                       <Pencil className="h-4 w-4" />
                     </button>
-                    <button type="button" aria-label={`Excluir ${g.title}`} onClick={() => setToDelete(g)} className="rounded-md p-1.5 text-muted-foreground hover:bg-secondary hover:text-destructive">
+                    <button
+                      type="button"
+                      aria-label={`Excluir ${g.title}`}
+                      onClick={() => setToDelete(g)}
+                      className="rounded-md p-1.5 text-muted-foreground hover:bg-secondary hover:text-destructive"
+                    >
                       <Trash2 className="h-4 w-4" />
                     </button>
                   </div>
@@ -117,12 +136,15 @@ function Metas() {
 
                 <div className="mt-4">
                   {progress === null ? (
-                    <p className="text-xs text-muted-foreground">Sem tarefas vinculadas — o progresso aparece quando houver.</p>
+                    <p className="text-xs text-muted-foreground">
+                      Sem tarefas vinculadas — o progresso aparece quando houver.
+                    </p>
                   ) : (
                     <>
                       <div className="mb-1 flex justify-between text-xs text-muted-foreground">
                         <span>
-                          {linked.filter((t) => t.status === "concluida").length} de {linked.length} tarefas
+                          {linked.filter((t) => t.status === "concluida").length} de {linked.length}{" "}
+                          tarefas
                         </span>
                         <span className="font-medium text-foreground">{progress}%</span>
                       </div>
@@ -140,10 +162,19 @@ function Metas() {
                 )}
 
                 <div className="mt-4 flex flex-wrap gap-2 pt-1">
-                  <Button size="sm" variant="outline" onClick={() => openForm({ defaults: { goal_id: g.id } })}>
+                  <Button
+                    size="sm"
+                    variant="outline"
+                    onClick={() => openForm({ defaults: { goal_id: g.id } })}
+                  >
                     <Plus /> Nova tarefa
                   </Button>
-                  <Button size="sm" variant="ghost" onClick={() => setLinking(g)} disabled={tasks.length === 0}>
+                  <Button
+                    size="sm"
+                    variant="ghost"
+                    onClick={() => setLinking(g)}
+                    disabled={tasks.length === 0}
+                  >
                     <Link2 /> Vincular tarefas
                   </Button>
                 </div>
@@ -159,7 +190,11 @@ function Metas() {
         open={!!toDelete}
         onOpenChange={(o) => !o && setToDelete(null)}
         title="Excluir meta?"
-        description={toDelete ? `“${toDelete.title}” será excluída. As tarefas vinculadas continuam na sua lista.` : undefined}
+        description={
+          toDelete
+            ? `“${toDelete.title}” será excluída. As tarefas vinculadas continuam na sua lista.`
+            : undefined
+        }
         onConfirm={async () => {
           if (!toDelete) return;
           try {
@@ -190,7 +225,12 @@ function GoalForm({ goal, onClose }: { goal?: Goal | undefined; onClose: () => v
     setSaving(true);
     try {
       await saveGoal(
-        { title: title.trim(), description: description.trim() || null, deadline: deadline || null, status },
+        {
+          title: title.trim(),
+          description: description.trim() || null,
+          deadline: deadline || null,
+          status,
+        },
         goal?.id,
       );
       await invalidate("goals");
@@ -208,18 +248,36 @@ function GoalForm({ goal, onClose }: { goal?: Goal | undefined; onClose: () => v
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>{goal ? "Editar meta" : "Nova meta"}</DialogTitle>
-          <DialogDescription>Depois, vincule tarefas para acompanhar o progresso.</DialogDescription>
+          <DialogDescription>
+            Depois, vincule tarefas para acompanhar o progresso.
+          </DialogDescription>
         </DialogHeader>
         <form onSubmit={submit} className="space-y-4" noValidate>
           <Field label="Título *" error={error} htmlFor="goal-title">
-            <Input id="goal-title" autoFocus maxLength={200} value={title} onChange={(e) => setTitle(e.target.value)} />
+            <Input
+              id="goal-title"
+              autoFocus
+              maxLength={200}
+              value={title}
+              onChange={(e) => setTitle(e.target.value)}
+            />
           </Field>
           <Field label="Descrição" htmlFor="goal-desc">
-            <Textarea id="goal-desc" rows={2} value={description} onChange={(e) => setDescription(e.target.value)} />
+            <Textarea
+              id="goal-desc"
+              rows={2}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
           </Field>
           <div className="grid grid-cols-2 gap-3">
             <Field label="Data-limite" htmlFor="goal-deadline">
-              <Input id="goal-deadline" type="date" value={deadline} onChange={(e) => setDeadline(e.target.value)} />
+              <Input
+                id="goal-deadline"
+                type="date"
+                value={deadline}
+                onChange={(e) => setDeadline(e.target.value)}
+              />
             </Field>
             <Field label="Status">
               <Select value={status} onValueChange={setStatus}>
@@ -282,13 +340,18 @@ function LinkTasksDialog({ goal, onClose }: { goal: Goal; onClose: () => void })
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle>Vincular tarefas</DialogTitle>
-          <DialogDescription>Escolha as tarefas que fazem parte de “{goal.title}”.</DialogDescription>
+          <DialogDescription>
+            Escolha as tarefas que fazem parte de “{goal.title}”.
+          </DialogDescription>
         </DialogHeader>
         <div className="max-h-80 space-y-1 overflow-y-auto">
           {tasks.map((t) => {
             const other = t.goal_id && t.goal_id !== goal.id ? goalName(t.goal_id) : null;
             return (
-              <label key={t.id} className="flex cursor-pointer items-start gap-3 rounded-md px-2 py-2 hover:bg-secondary">
+              <label
+                key={t.id}
+                className="flex cursor-pointer items-start gap-3 rounded-md px-2 py-2 hover:bg-secondary"
+              >
                 <Checkbox
                   className="mt-0.5"
                   checked={selected.has(t.id)}
@@ -300,8 +363,14 @@ function LinkTasksDialog({ goal, onClose }: { goal: Goal; onClose: () => void })
                   }}
                 />
                 <span className="text-sm">
-                  <span className={cn(t.status === "concluida" && "text-muted-foreground line-through")}>{t.title}</span>
-                  {other && <span className="block text-xs text-muted-foreground">Hoje em: {other}</span>}
+                  <span
+                    className={cn(t.status === "concluida" && "text-muted-foreground line-through")}
+                  >
+                    {t.title}
+                  </span>
+                  {other && (
+                    <span className="block text-xs text-muted-foreground">Hoje em: {other}</span>
+                  )}
                 </span>
               </label>
             );

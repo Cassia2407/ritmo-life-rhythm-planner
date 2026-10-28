@@ -65,7 +65,15 @@ function Logo() {
   );
 }
 
-function NavLink({ item, onClick, compact }: { item: NavItem; onClick?: () => void; compact?: boolean }) {
+function NavLink({
+  item,
+  onClick,
+  compact,
+}: {
+  item: NavItem;
+  onClick?: () => void;
+  compact?: boolean;
+}) {
   const Icon = item.icon;
   return (
     <Link

@@ -15,7 +15,14 @@ import { EmptyState, PageHeader } from "@/components/ritmo/ui-bits";
 import { TaskItem } from "@/components/ritmo/task-item";
 import { useTaskDialog } from "@/components/ritmo/task-dialog";
 import { categoriesQuery, tasksQuery } from "@/lib/data";
-import { PRIORITY_WEIGHT, isOverdue, isWithin, toISODate, type Priority, type Task } from "@/lib/ritmo";
+import {
+  PRIORITY_WEIGHT,
+  isOverdue,
+  isWithin,
+  toISODate,
+  type Priority,
+  type Task,
+} from "@/lib/ritmo";
 import { pageHead } from "@/lib/seo";
 
 export const Route = createFileRoute("/_authenticated/_shell/tarefas")({
@@ -47,7 +54,8 @@ function Tarefas() {
     const list = tasks.filter((t) => {
       if (status !== "todas" && t.status !== status) return false;
       if (priority !== "todas" && t.priority !== priority) return false;
-      if (category === "sem" ? t.category_id : category !== "todas" && t.category_id !== category) return false;
+      if (category === "sem" ? t.category_id : category !== "todas" && t.category_id !== category)
+        return false;
       if (tag !== "todas" && !t.tags.includes(tag)) return false;
       if (date === "hoje" && t.due_date !== today) return false;
       if (date === "semana" && !(t.due_date && isWithin(t.due_date, wFrom, wTo))) return false;
@@ -56,16 +64,23 @@ function Tarefas() {
       return true;
     });
     const byDue = (a: Task, b: Task) =>
-      (a.due_date ?? "9999") + (a.start_time ?? "99") < (b.due_date ?? "9999") + (b.start_time ?? "99") ? -1 : 1;
+      (a.due_date ?? "9999") + (a.start_time ?? "99") <
+      (b.due_date ?? "9999") + (b.start_time ?? "99")
+        ? -1
+        : 1;
     return list.sort((a, b) => {
       if (sort === "prioridade")
-        return PRIORITY_WEIGHT[b.priority as Priority] - PRIORITY_WEIGHT[a.priority as Priority] || byDue(a, b);
+        return (
+          PRIORITY_WEIGHT[b.priority as Priority] - PRIORITY_WEIGHT[a.priority as Priority] ||
+          byDue(a, b)
+        );
       if (sort === "criacao") return b.created_at.localeCompare(a.created_at);
       return byDue(a, b);
     });
   }, [tasks, status, priority, category, tag, date, sort]);
 
-  const hasFilters = priority !== "todas" || category !== "todas" || tag !== "todas" || date !== "todas";
+  const hasFilters =
+    priority !== "todas" || category !== "todas" || tag !== "todas" || date !== "todas";
 
   return (
     <div>
@@ -80,22 +95,65 @@ function Tarefas() {
       />
 
       <div className="mb-5 grid grid-cols-2 gap-2 sm:grid-cols-3 lg:grid-cols-6">
-        <Filter label="Status" value={status} onChange={setStatus} options={[["todas", "Todas"], ["pendente", "Pendentes"], ["concluida", "Concluídas"]]} />
-        <Filter label="Prioridade" value={priority} onChange={setPriority} options={[["todas", "Todas"], ["alta", "Alta"], ["media", "Média"], ["baixa", "Baixa"]]} />
+        <Filter
+          label="Status"
+          value={status}
+          onChange={setStatus}
+          options={[
+            ["todas", "Todas"],
+            ["pendente", "Pendentes"],
+            ["concluida", "Concluídas"],
+          ]}
+        />
+        <Filter
+          label="Prioridade"
+          value={priority}
+          onChange={setPriority}
+          options={[
+            ["todas", "Todas"],
+            ["alta", "Alta"],
+            ["media", "Média"],
+            ["baixa", "Baixa"],
+          ]}
+        />
         <Filter
           label="Categoria"
           value={category}
           onChange={setCategory}
-          options={[["todas", "Todas"], ["sem", "Sem categoria"], ...categories.map((c) => [c.id, c.name] as [string, string])]}
+          options={[
+            ["todas", "Todas"],
+            ["sem", "Sem categoria"],
+            ...categories.map((c) => [c.id, c.name] as [string, string]),
+          ]}
         />
-        <Filter label="Etiqueta" value={tag} onChange={setTag} options={[["todas", "Todas"], ...allTags.map((t) => [t, `#${t}`] as [string, string])]} />
+        <Filter
+          label="Etiqueta"
+          value={tag}
+          onChange={setTag}
+          options={[["todas", "Todas"], ...allTags.map((t) => [t, `#${t}`] as [string, string])]}
+        />
         <Filter
           label="Data"
           value={date}
           onChange={setDate}
-          options={[["todas", "Qualquer"], ["hoje", "Hoje"], ["semana", "Esta semana"], ["atrasadas", "Atrasadas"], ["sem", "Sem data"]]}
+          options={[
+            ["todas", "Qualquer"],
+            ["hoje", "Hoje"],
+            ["semana", "Esta semana"],
+            ["atrasadas", "Atrasadas"],
+            ["sem", "Sem data"],
+          ]}
         />
-        <Filter label="Ordenar por" value={sort} onChange={(v) => setSort(v as SortKey)} options={[["prazo", "Prazo"], ["prioridade", "Prioridade"], ["criacao", "Data de criação"]]} />
+        <Filter
+          label="Ordenar por"
+          value={sort}
+          onChange={(v) => setSort(v as SortKey)}
+          options={[
+            ["prazo", "Prazo"],
+            ["prioridade", "Prioridade"],
+            ["criacao", "Data de criação"],
+          ]}
+        />
       </div>
 
       {tasks.length === 0 ? (

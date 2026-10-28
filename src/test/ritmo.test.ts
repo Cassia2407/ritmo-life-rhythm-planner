@@ -13,20 +13,32 @@ const now = new Date(2026, 9, 28, 14, 0); // 28 Oct 2026, 14:00 local
 describe("tarefas atrasadas", () => {
   it("pending task dated yesterday is overdue", () => {
     expect(
-      isOverdue({ status: "pendente", due_date: "2026-10-27", start_time: null, end_time: null }, now),
+      isOverdue(
+        { status: "pendente", due_date: "2026-10-27", start_time: null, end_time: null },
+        now,
+      ),
     ).toBe(true);
   });
   it("completed task is never overdue", () => {
     expect(
-      isOverdue({ status: "concluida", due_date: "2026-10-01", start_time: null, end_time: null }, now),
+      isOverdue(
+        { status: "concluida", due_date: "2026-10-01", start_time: null, end_time: null },
+        now,
+      ),
     ).toBe(false);
   });
   it("task today whose end time passed is overdue, untimed task today is not", () => {
     expect(
-      isOverdue({ status: "pendente", due_date: "2026-10-28", start_time: "09:00", end_time: "10:00" }, now),
+      isOverdue(
+        { status: "pendente", due_date: "2026-10-28", start_time: "09:00", end_time: "10:00" },
+        now,
+      ),
     ).toBe(true);
     expect(
-      isOverdue({ status: "pendente", due_date: "2026-10-28", start_time: null, end_time: null }, now),
+      isOverdue(
+        { status: "pendente", due_date: "2026-10-28", start_time: null, end_time: null },
+        now,
+      ),
     ).toBe(false);
   });
 });
@@ -46,7 +58,12 @@ describe("progresso das metas", () => {
   });
   it("is the share of completed linked tasks", () => {
     expect(
-      goalProgress([{ status: "concluida" }, { status: "pendente" }, { status: "pendente" }, { status: "concluida" }]),
+      goalProgress([
+        { status: "concluida" },
+        { status: "pendente" },
+        { status: "pendente" },
+        { status: "concluida" },
+      ]),
     ).toBe(50);
   });
 });

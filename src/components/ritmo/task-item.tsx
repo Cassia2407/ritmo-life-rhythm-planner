@@ -36,7 +36,12 @@ export function TaskItem({
         {done && <Check className="h-3 w-3" strokeWidth={3} />}
       </button>
       <button type="button" onClick={() => openDetails(task)} className="min-w-0 flex-1 text-left">
-        <p className={cn("truncate text-sm font-medium", done && "text-muted-foreground line-through")}>
+        <p
+          className={cn(
+            "truncate text-sm font-medium",
+            done && "text-muted-foreground line-through",
+          )}
+        >
           {task.title}
         </p>
         <div className="mt-0.5 flex flex-wrap items-center gap-x-3 gap-y-0.5 text-xs text-muted-foreground">

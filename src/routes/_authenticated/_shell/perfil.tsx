@@ -26,7 +26,10 @@ function Perfil() {
 
   async function save(e: React.FormEvent) {
     e.preventDefault();
-    if (!name.trim()) { toast.error("Informe seu nome."); return; }
+    if (!name.trim()) {
+      toast.error("Informe seu nome.");
+      return;
+    }
     setSaving(true);
     try {
       await updateDisplayName(profile.id, name.trim());
@@ -47,7 +50,12 @@ function Perfil() {
           <form onSubmit={save} className="max-w-md space-y-4">
             <div className="space-y-1.5">
               <Label htmlFor="profile-name">Nome</Label>
-              <Input id="profile-name" value={name} maxLength={80} onChange={(e) => setName(e.target.value)} />
+              <Input
+                id="profile-name"
+                value={name}
+                maxLength={80}
+                onChange={(e) => setName(e.target.value)}
+              />
             </div>
             <div className="space-y-1.5">
               <Label htmlFor="profile-email">E-mail</Label>

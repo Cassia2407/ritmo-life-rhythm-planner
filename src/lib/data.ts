@@ -21,7 +21,8 @@ export const profileQuery = queryOptions({
     return {
       id: user.id,
       email: user.email ?? "",
-      displayName: data?.display_name ?? (user.user_metadata?.["display_name"] as string | undefined) ?? "",
+      displayName:
+        data?.display_name ?? (user.user_metadata?.["display_name"] as string | undefined) ?? "",
     };
   },
 });
@@ -64,7 +65,12 @@ export function useInvalidate() {
 
 export async function saveTask(input: TablesInsert<"tasks">, id?: string) {
   if (id) {
-    unwrap(await supabase.from("tasks").update(input as TablesUpdate<"tasks">).eq("id", id));
+    unwrap(
+      await supabase
+        .from("tasks")
+        .update(input as TablesUpdate<"tasks">)
+        .eq("id", id),
+    );
   } else {
     unwrap(await supabase.from("tasks").insert(input));
   }
@@ -100,7 +106,13 @@ export async function deleteCategory(id: string) {
 }
 
 export async function saveGoal(input: TablesInsert<"goals">, id?: string) {
-  if (id) unwrap(await supabase.from("goals").update(input as TablesUpdate<"goals">).eq("id", id));
+  if (id)
+    unwrap(
+      await supabase
+        .from("goals")
+        .update(input as TablesUpdate<"goals">)
+        .eq("id", id),
+    );
   else unwrap(await supabase.from("goals").insert(input));
 }
 
@@ -109,7 +121,13 @@ export async function deleteGoal(id: string) {
 }
 
 export async function saveHabit(input: TablesInsert<"habits">, id?: string) {
-  if (id) unwrap(await supabase.from("habits").update(input as TablesUpdate<"habits">).eq("id", id));
+  if (id)
+    unwrap(
+      await supabase
+        .from("habits")
+        .update(input as TablesUpdate<"habits">)
+        .eq("id", id),
+    );
   else unwrap(await supabase.from("habits").insert(input));
 }
 

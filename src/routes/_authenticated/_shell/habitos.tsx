@@ -80,7 +80,8 @@ function Habitos() {
 
       <div className="mb-6 rounded-xl border border-dashed bg-card/60 p-4">
         <p className="text-xs text-muted-foreground">
-          Exemplos opcionais — toque para começar um hábito com esse nome (nada é criado sem você salvar):
+          Exemplos opcionais — toque para começar um hábito com esse nome (nada é criado sem você
+          salvar):
         </p>
         <div className="mt-2 flex flex-wrap gap-2">
           {EXAMPLES.map((ex) => (
@@ -121,7 +122,12 @@ function Habitos() {
               <div key={h.id} className="rounded-xl border bg-card p-4 shadow-soft">
                 <div className="flex items-start gap-3">
                   {scheduledToday ? (
-                    <HabitCheck habitId={h.id} date={todayKey} done={set.has(todayKey)} label={`Marcar ${h.name} como feito hoje`} />
+                    <HabitCheck
+                      habitId={h.id}
+                      date={todayKey}
+                      done={set.has(todayKey)}
+                      label={`Marcar ${h.name} como feito hoje`}
+                    />
                   ) : (
                     <span className="mt-1 h-7 w-7 shrink-0" />
                   )}
@@ -137,13 +143,25 @@ function Habitos() {
                             .join(", ")}
                       {!scheduledToday && " · não programado para hoje"}
                     </p>
-                    {h.description && <p className="mt-1 text-sm text-muted-foreground">{h.description}</p>}
+                    {h.description && (
+                      <p className="mt-1 text-sm text-muted-foreground">{h.description}</p>
+                    )}
                   </div>
                   <div className="flex gap-0.5">
-                    <button type="button" aria-label={`Editar ${h.name}`} onClick={() => setForm({ habit: h })} className="rounded-md p-1.5 text-muted-foreground hover:bg-secondary">
+                    <button
+                      type="button"
+                      aria-label={`Editar ${h.name}`}
+                      onClick={() => setForm({ habit: h })}
+                      className="rounded-md p-1.5 text-muted-foreground hover:bg-secondary"
+                    >
                       <Pencil className="h-4 w-4" />
                     </button>
-                    <button type="button" aria-label={`Excluir ${h.name}`} onClick={() => setToDelete(h)} className="rounded-md p-1.5 text-muted-foreground hover:bg-secondary hover:text-destructive">
+                    <button
+                      type="button"
+                      aria-label={`Excluir ${h.name}`}
+                      onClick={() => setToDelete(h)}
+                      className="rounded-md p-1.5 text-muted-foreground hover:bg-secondary hover:text-destructive"
+                    >
                       <Trash2 className="h-4 w-4" />
                     </button>
                   </div>
@@ -155,7 +173,9 @@ function Habitos() {
                       const sched = isHabitScheduled(h, d);
                       return (
                         <div key={key} className="flex flex-col items-center gap-1">
-                          <span className="text-[10px] text-muted-foreground">{(WEEKDAYS_SHORT[d.getDay()] ?? "").slice(0, 1)}</span>
+                          <span className="text-[10px] text-muted-foreground">
+                            {(WEEKDAYS_SHORT[d.getDay()] ?? "").slice(0, 1)}
+                          </span>
                           {sched ? (
                             <HabitCheck
                               size="sm"
@@ -165,7 +185,9 @@ function Habitos() {
                               label={`${h.name} em ${format(d, "d 'de' MMMM", { locale: ptBR })}`}
                             />
                           ) : (
-                            <span className="flex h-6 w-6 items-center justify-center text-xs text-muted-foreground/50">·</span>
+                            <span className="flex h-6 w-6 items-center justify-center text-xs text-muted-foreground/50">
+                              ·
+                            </span>
                           )}
                         </div>
                       );
@@ -173,12 +195,19 @@ function Habitos() {
                   </div>
                   <div className="flex gap-5 text-xs text-muted-foreground">
                     <span>
-                      <span className="block text-base font-semibold text-foreground">{rate === null ? "—" : `${rate}%`}</span>
+                      <span className="block text-base font-semibold text-foreground">
+                        {rate === null ? "—" : `${rate}%`}
+                      </span>
                       constância (30 dias)
                     </span>
                     <span>
                       <span className="flex items-center gap-1 text-base font-semibold text-foreground">
-                        <Flame className={cn("h-4 w-4", streak > 0 ? "text-warning" : "text-muted-foreground")} />
+                        <Flame
+                          className={cn(
+                            "h-4 w-4",
+                            streak > 0 ? "text-warning" : "text-muted-foreground",
+                          )}
+                        />
                         {streak}
                       </span>
                       sequência atual
@@ -196,7 +225,9 @@ function Habitos() {
         open={!!toDelete}
         onOpenChange={(o) => !o && setToDelete(null)}
         title="Excluir hábito?"
-        description={toDelete ? `“${toDelete.name}” e todo o seu histórico serão excluídos.` : undefined}
+        description={
+          toDelete ? `“${toDelete.name}” e todo o seu histórico serão excluídos.` : undefined
+        }
         onConfirm={async () => {
           if (!toDelete) return;
           try {
@@ -212,7 +243,13 @@ function Habitos() {
   );
 }
 
-function HabitForm({ initial, onClose }: { initial: { habit?: Habit; name?: string }; onClose: () => void }) {
+function HabitForm({
+  initial,
+  onClose,
+}: {
+  initial: { habit?: Habit; name?: string };
+  onClose: () => void;
+}) {
   const invalidate = useInvalidate();
   const h = initial.habit;
   const [name, setName] = useState(h?.name ?? initial.name ?? "");
@@ -227,7 +264,8 @@ function HabitForm({ initial, onClose }: { initial: { habit?: Habit; name?: stri
     e.preventDefault();
     const errs: Partial<Record<"name" | "days" | "start", string>> = {};
     if (!name.trim()) errs.name = "Informe um nome.";
-    if (frequency === "dias_especificos" && days.length === 0) errs.days = "Escolha pelo menos um dia.";
+    if (frequency === "dias_especificos" && days.length === 0)
+      errs.days = "Escolha pelo menos um dia.";
     if (!startDate) errs.start = "Informe a data de início.";
     setErrors(errs);
     if (Object.keys(errs).length) return;
@@ -262,10 +300,21 @@ function HabitForm({ initial, onClose }: { initial: { habit?: Habit; name?: stri
         </DialogHeader>
         <form onSubmit={submit} className="space-y-4" noValidate>
           <Field label="Nome *" error={errors.name} htmlFor="habit-name">
-            <Input id="habit-name" autoFocus value={name} maxLength={120} onChange={(e) => setName(e.target.value)} />
+            <Input
+              id="habit-name"
+              autoFocus
+              value={name}
+              maxLength={120}
+              onChange={(e) => setName(e.target.value)}
+            />
           </Field>
           <Field label="Descrição" htmlFor="habit-desc">
-            <Textarea id="habit-desc" rows={2} value={description} onChange={(e) => setDescription(e.target.value)} />
+            <Textarea
+              id="habit-desc"
+              rows={2}
+              value={description}
+              onChange={(e) => setDescription(e.target.value)}
+            />
           </Field>
           <Field label="Frequência" error={errors.days}>
             <RadioGroup value={frequency} onValueChange={setFrequency} className="flex gap-4">
@@ -288,7 +337,9 @@ function HabitForm({ initial, onClose }: { initial: { habit?: Habit; name?: stri
                       onClick={() => setDays(on ? days.filter((x) => x !== i) : [...days, i])}
                       className={cn(
                         "rounded-full border px-3 py-1 text-xs transition-colors",
-                        on ? "border-primary bg-primary text-primary-foreground" : "hover:bg-secondary",
+                        on
+                          ? "border-primary bg-primary text-primary-foreground"
+                          : "hover:bg-secondary",
                       )}
                     >
                       {d}
@@ -300,7 +351,13 @@ function HabitForm({ initial, onClose }: { initial: { habit?: Habit; name?: stri
           </Field>
           <div className="space-y-1.5">
             <Label htmlFor="habit-start">Data de início</Label>
-            <Input id="habit-start" type="date" value={startDate} max={toISODate(addDays(new Date(), 365))} onChange={(e) => setStartDate(e.target.value)} />
+            <Input
+              id="habit-start"
+              type="date"
+              value={startDate}
+              max={toISODate(addDays(new Date(), 365))}
+              onChange={(e) => setStartDate(e.target.value)}
+            />
             {errors.start && <p className="text-xs text-destructive">{errors.start}</p>}
           </div>
           <DialogFooter>

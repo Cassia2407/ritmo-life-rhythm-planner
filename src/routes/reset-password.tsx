@@ -28,27 +28,49 @@ function ResetPassword() {
 
   async function submit(e: React.FormEvent) {
     e.preventDefault();
-    if (password.length < 6) { toast.error("A senha precisa ter pelo menos 6 caracteres."); return; }
-    if (password !== confirm) { toast.error("As senhas não coincidem."); return; }
+    if (password.length < 6) {
+      toast.error("A senha precisa ter pelo menos 6 caracteres.");
+      return;
+    }
+    if (password !== confirm) {
+      toast.error("As senhas não coincidem.");
+      return;
+    }
     setLoading(true);
     const { error } = await supabase.auth.updateUser({ password });
     setLoading(false);
-    if (error) { toast.error("Não foi possível redefinir", { description: error.message }); return; }
+    if (error) {
+      toast.error("Não foi possível redefinir", { description: error.message });
+      return;
+    }
     toast.success("Senha atualizada");
     navigate({ to: "/inicio", replace: true });
   }
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4">
-      <form onSubmit={submit} className="w-full max-w-sm space-y-4 rounded-2xl border bg-card p-6 shadow-soft">
+      <form
+        onSubmit={submit}
+        className="w-full max-w-sm space-y-4 rounded-2xl border bg-card p-6 shadow-soft"
+      >
         <h1 className="text-xl font-semibold">Criar nova senha</h1>
         <div className="space-y-1.5">
           <Label htmlFor="pw">Nova senha</Label>
-          <Input id="pw" type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+          <Input
+            id="pw"
+            type="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+          />
         </div>
         <div className="space-y-1.5">
           <Label htmlFor="pw2">Confirmar senha</Label>
-          <Input id="pw2" type="password" value={confirm} onChange={(e) => setConfirm(e.target.value)} />
+          <Input
+            id="pw2"
+            type="password"
+            value={confirm}
+            onChange={(e) => setConfirm(e.target.value)}
+          />
         </div>
         <Button type="submit" className="w-full" disabled={loading}>
           {loading ? "Salvando…" : "Salvar nova senha"}

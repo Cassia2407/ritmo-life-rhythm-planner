@@ -109,9 +109,14 @@ function CategoriesPanel() {
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     const n = name.trim();
-    if (!n) { toast.error("Dê um nome à categoria."); return; }
-    if (categories.some((c) => c.name.toLowerCase() === n.toLowerCase() && c.id !== editing?.id))
-      { toast.error("Já existe uma categoria com esse nome."); return; }
+    if (!n) {
+      toast.error("Dê um nome à categoria.");
+      return;
+    }
+    if (categories.some((c) => c.name.toLowerCase() === n.toLowerCase() && c.id !== editing?.id)) {
+      toast.error("Já existe uma categoria com esse nome.");
+      return;
+    }
     try {
       await saveCategory({ name: n, color }, editing?.id);
       await invalidate("categories");
@@ -164,11 +169,19 @@ function CategoriesPanel() {
         <p className="text-xs font-medium text-muted-foreground">
           {editing ? `Editando “${editing.name}”` : "Nova categoria"}
         </p>
-        <Input value={name} maxLength={60} onChange={(e) => setName(e.target.value)} placeholder="Nome" aria-label="Nome da categoria" />
+        <Input
+          value={name}
+          maxLength={60}
+          onChange={(e) => setName(e.target.value)}
+          placeholder="Nome"
+          aria-label="Nome da categoria"
+        />
         <ColorPicker value={color} onChange={setColor} />
         <div className="flex gap-2">
           <Button type="submit" size="sm">
-            {editing ? "Salvar" : (
+            {editing ? (
+              "Salvar"
+            ) : (
               <>
                 <Plus /> Adicionar
               </>
@@ -252,8 +265,16 @@ function TagsPanel() {
                     rename(tag);
                   }}
                 >
-                  <Input autoFocus value={newName} onChange={(e) => setNewName(e.target.value)} className="h-8" aria-label="Novo nome da etiqueta" />
-                  <Button size="sm" type="submit">Salvar</Button>
+                  <Input
+                    autoFocus
+                    value={newName}
+                    onChange={(e) => setNewName(e.target.value)}
+                    className="h-8"
+                    aria-label="Novo nome da etiqueta"
+                  />
+                  <Button size="sm" type="submit">
+                    Salvar
+                  </Button>
                   <Button size="sm" type="button" variant="ghost" onClick={() => setRenaming(null)}>
                     Cancelar
                   </Button>
@@ -262,10 +283,23 @@ function TagsPanel() {
                 <>
                   <span className="flex-1 text-sm">#{tag}</span>
                   <span className="text-xs text-muted-foreground">{n} atividade(s)</span>
-                  <button type="button" aria-label={`Renomear ${tag}`} onClick={() => { setRenaming(tag); setNewName(tag); }} className="rounded-md p-1.5 text-muted-foreground hover:bg-secondary">
+                  <button
+                    type="button"
+                    aria-label={`Renomear ${tag}`}
+                    onClick={() => {
+                      setRenaming(tag);
+                      setNewName(tag);
+                    }}
+                    className="rounded-md p-1.5 text-muted-foreground hover:bg-secondary"
+                  >
                     <Pencil className="h-4 w-4" />
                   </button>
-                  <button type="button" aria-label={`Remover ${tag}`} onClick={() => setToDelete(tag)} className="rounded-md p-1.5 text-muted-foreground hover:bg-secondary hover:text-destructive">
+                  <button
+                    type="button"
+                    aria-label={`Remover ${tag}`}
+                    onClick={() => setToDelete(tag)}
+                    className="rounded-md p-1.5 text-muted-foreground hover:bg-secondary hover:text-destructive"
+                  >
                     <Trash2 className="h-4 w-4" />
                   </button>
                 </>
@@ -302,7 +336,11 @@ function DeleteDataButton() {
   const [confirmText, setConfirmText] = useState("");
   return (
     <>
-      <Button variant="ghost" className="text-destructive hover:text-destructive" onClick={() => setOpen(true)}>
+      <Button
+        variant="ghost"
+        className="text-destructive hover:text-destructive"
+        onClick={() => setOpen(true)}
+      >
         <Trash2 /> Excluir meus dados
       </Button>
       <ConfirmDialog
@@ -329,7 +367,11 @@ function DeleteDataButton() {
           <Label htmlFor="confirm-delete" className="text-sm font-normal">
             Digite <strong>EXCLUIR</strong> para confirmar
           </Label>
-          <Input id="confirm-delete" value={confirmText} onChange={(e) => setConfirmText(e.target.value)} />
+          <Input
+            id="confirm-delete"
+            value={confirmText}
+            onChange={(e) => setConfirmText(e.target.value)}
+          />
         </div>
       </ConfirmDialog>
     </>

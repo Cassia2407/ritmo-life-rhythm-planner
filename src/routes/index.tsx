@@ -25,7 +25,11 @@ export const Route = createFileRoute("/")({
 
 const FEATURES = [
   { icon: CheckSquare, title: "Tarefas", text: "Prioridades, prazos, categorias e etiquetas." },
-  { icon: CalendarDays, title: "Calendário", text: "Visão mensal, semanal e diária dos compromissos." },
+  {
+    icon: CalendarDays,
+    title: "Calendário",
+    text: "Visão mensal, semanal e diária dos compromissos.",
+  },
   { icon: Repeat, title: "Hábitos", text: "Marque o que fez a cada dia e acompanhe a constância." },
   { icon: Target, title: "Metas", text: "Ligue tarefas às metas e veja o progresso real." },
 ];
@@ -58,8 +62,8 @@ function Landing() {
             Encontre o ritmo do seu dia.
           </h1>
           <p className="mt-4 text-lg text-muted-foreground">
-            Estudos, trabalho, compromissos, hábitos e metas em um lugar calmo e fácil de usar —
-            no computador ou no celular.
+            Estudos, trabalho, compromissos, hábitos e metas em um lugar calmo e fácil de usar — no
+            computador ou no celular.
           </p>
           <div className="mt-8 flex flex-wrap gap-3">
             <Button size="lg" asChild>

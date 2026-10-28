@@ -49,10 +49,18 @@ function AuthPage() {
   async function submit(e: React.FormEvent) {
     e.preventDefault();
     setNotice(null);
-    if (!/^\S+@\S+\.\S+$/.test(email)) { toast.error("Informe um e-mail válido."); return; }
-    if (mode !== "forgot" && password.length < 6)
-      { toast.error("A senha precisa ter pelo menos 6 caracteres."); return; }
-    if (mode === "signup" && !name.trim()) { toast.error("Informe seu nome."); return; }
+    if (!/^\S+@\S+\.\S+$/.test(email)) {
+      toast.error("Informe um e-mail válido.");
+      return;
+    }
+    if (mode !== "forgot" && password.length < 6) {
+      toast.error("A senha precisa ter pelo menos 6 caracteres.");
+      return;
+    }
+    if (mode === "signup" && !name.trim()) {
+      toast.error("Informe seu nome.");
+      return;
+    }
 
     setLoading(true);
     try {
@@ -77,7 +85,9 @@ function AuthPage() {
           redirectTo: `${window.location.origin}/reset-password`,
         });
         if (error) throw error;
-        setNotice("Se houver uma conta com esse e-mail, você receberá um link para redefinir a senha.");
+        setNotice(
+          "Se houver uma conta com esse e-mail, você receberá um link para redefinir a senha.",
+        );
       }
     } catch (err) {
       const msg = (err as Error).message;
@@ -126,13 +136,20 @@ function AuthPage() {
           </p>
 
           {notice ? (
-            <div className="mt-6 rounded-lg bg-sage-soft p-4 text-sm text-sage-foreground">{notice}</div>
+            <div className="mt-6 rounded-lg bg-sage-soft p-4 text-sm text-sage-foreground">
+              {notice}
+            </div>
           ) : (
             <form onSubmit={submit} className="mt-6 space-y-4" noValidate>
               {mode === "signup" && (
                 <div className="space-y-1.5">
                   <Label htmlFor="name">Nome</Label>
-                  <Input id="name" value={name} onChange={(e) => setName(e.target.value)} autoComplete="name" />
+                  <Input
+                    id="name"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    autoComplete="name"
+                  />
                 </div>
               )}
               <div className="space-y-1.5">
@@ -183,7 +200,8 @@ function AuthPage() {
           {mode !== "forgot" && !notice && (
             <>
               <div className="my-5 flex items-center gap-3 text-xs text-muted-foreground">
-                <span className="h-px flex-1 bg-border" /> ou <span className="h-px flex-1 bg-border" />
+                <span className="h-px flex-1 bg-border" /> ou{" "}
+                <span className="h-px flex-1 bg-border" />
               </div>
               <Button variant="outline" className="w-full" onClick={google}>
                 Continuar com Google
@@ -195,14 +213,26 @@ function AuthPage() {
             {mode === "signin" ? (
               <>
                 Não tem conta?{" "}
-                <button className="text-primary hover:underline" onClick={() => { setMode("signup"); setNotice(null); }}>
+                <button
+                  className="text-primary hover:underline"
+                  onClick={() => {
+                    setMode("signup");
+                    setNotice(null);
+                  }}
+                >
                   Criar conta
                 </button>
               </>
             ) : (
               <>
                 Já tem conta?{" "}
-                <button className="text-primary hover:underline" onClick={() => { setMode("signin"); setNotice(null); }}>
+                <button
+                  className="text-primary hover:underline"
+                  onClick={() => {
+                    setMode("signin");
+                    setNotice(null);
+                  }}
+                >
                   Entrar
                 </button>
               </>

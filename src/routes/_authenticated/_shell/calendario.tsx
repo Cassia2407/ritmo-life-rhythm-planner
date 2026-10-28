@@ -161,7 +161,10 @@ function Calendario() {
                           t.status === "concluida" && "text-muted-foreground line-through",
                         )}
                       >
-                        <CategoryDot color={catById.get(t.category_id ?? "")?.color} className="h-1.5 w-1.5" />
+                        <CategoryDot
+                          color={catById.get(t.category_id ?? "")?.color}
+                          className="h-1.5 w-1.5"
+                        />
                         <span className="hidden truncate sm:inline">
                           {t.start_time && `${formatTime(t.start_time)} `}
                           {t.title}
@@ -191,10 +194,22 @@ function Calendario() {
             const key = toISODate(d);
             const items = byDate.get(key) ?? [];
             return (
-              <div key={key} className={cn("rounded-xl border bg-card p-2 shadow-soft", key === today && "border-primary/50")}>
+              <div
+                key={key}
+                className={cn(
+                  "rounded-xl border bg-card p-2 shadow-soft",
+                  key === today && "border-primary/50",
+                )}
+              >
                 <div className="mb-2 flex items-center justify-between">
-                  <button type="button" onClick={() => openDay(d)} className="text-left text-xs hover:underline">
-                    <span className="block text-muted-foreground">{WEEKDAYS_SHORT[d.getDay()]}</span>
+                  <button
+                    type="button"
+                    onClick={() => openDay(d)}
+                    className="text-left text-xs hover:underline"
+                  >
+                    <span className="block text-muted-foreground">
+                      {WEEKDAYS_SHORT[d.getDay()]}
+                    </span>
                     <span className="text-sm font-semibold">{format(d, "d")}</span>
                   </button>
                   <button
@@ -216,13 +231,22 @@ function Calendario() {
                         "w-full rounded-md border-l-[3px] bg-secondary/50 px-2 py-1 text-left text-xs hover:bg-secondary",
                         t.status === "concluida" && "text-muted-foreground line-through",
                       )}
-                      style={{ borderLeftColor: catById.get(t.category_id ?? "")?.color ?? "var(--sky)" }}
+                      style={{
+                        borderLeftColor: catById.get(t.category_id ?? "")?.color ?? "var(--sky)",
+                      }}
                     >
-                      {t.start_time && <span className="block text-[10px] text-muted-foreground">{formatTime(t.start_time)}{t.end_time && `–${formatTime(t.end_time)}`}</span>}
+                      {t.start_time && (
+                        <span className="block text-[10px] text-muted-foreground">
+                          {formatTime(t.start_time)}
+                          {t.end_time && `–${formatTime(t.end_time)}`}
+                        </span>
+                      )}
                       <span className="line-clamp-2">{t.title}</span>
                     </button>
                   ))}
-                  {items.length === 0 && <p className="px-1 text-[11px] text-muted-foreground">—</p>}
+                  {items.length === 0 && (
+                    <p className="px-1 text-[11px] text-muted-foreground">—</p>
+                  )}
                 </div>
               </div>
             );
@@ -268,17 +292,31 @@ function DayView({
     <div className="space-y-5">
       {timed.length > 0 && (
         <div className="space-y-2">
-          <h2 className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Com horário</h2>
+          <h2 className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+            Com horário
+          </h2>
           {timed.map((t) => (
-            <TaskItem key={t.id} task={t} category={catById.get(t.category_id ?? "")} showDate={false} />
+            <TaskItem
+              key={t.id}
+              task={t}
+              category={catById.get(t.category_id ?? "")}
+              showDate={false}
+            />
           ))}
         </div>
       )}
       {untimed.length > 0 && (
         <div className="space-y-2">
-          <h2 className="text-xs font-medium uppercase tracking-wide text-muted-foreground">Sem horário</h2>
+          <h2 className="text-xs font-medium uppercase tracking-wide text-muted-foreground">
+            Sem horário
+          </h2>
           {untimed.map((t) => (
-            <TaskItem key={t.id} task={t} category={catById.get(t.category_id ?? "")} showDate={false} />
+            <TaskItem
+              key={t.id}
+              task={t}
+              category={catById.get(t.category_id ?? "")}
+              showDate={false}
+            />
           ))}
         </div>
       )}

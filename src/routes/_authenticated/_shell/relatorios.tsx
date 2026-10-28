@@ -57,7 +57,9 @@ function Relatorios() {
   const effectiveTo = min([to, now]);
 
   const data = useMemo(() => {
-    const completed = tasks.filter((t) => t.completed_at && isWithin(toISODate(new Date(t.completed_at)), from, to));
+    const completed = tasks.filter(
+      (t) => t.completed_at && isWithin(toISODate(new Date(t.completed_at)), from, to),
+    );
     const pending = tasks.filter((t) => t.status === "pendente");
     const overdue = pending.filter((t) => isOverdue(t, now));
     const logsInPeriod = logs.filter((l) => isWithin(l.log_date, from, to));
@@ -108,7 +110,10 @@ function Relatorios() {
 
   return (
     <div>
-      <PageHeader title="Relatórios e produtividade" description="Tudo aqui vem dos seus registros reais." />
+      <PageHeader
+        title="Relatórios e produtividade"
+        description="Tudo aqui vem dos seus registros reais."
+      />
 
       <div className="mb-5 flex flex-wrap items-center justify-between gap-3">
         <Tabs value={period} onValueChange={(v) => setPeriod(v as Period)}>
@@ -118,11 +123,25 @@ function Relatorios() {
           </TabsList>
         </Tabs>
         <div className="flex items-center gap-1">
-          <Button variant="ghost" size="icon" aria-label="Período anterior" onClick={() => setCursor((c) => (period === "semana" ? addWeeks(c, -1) : addMonths(c, -1)))}>
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label="Período anterior"
+            onClick={() =>
+              setCursor((c) => (period === "semana" ? addWeeks(c, -1) : addMonths(c, -1)))
+            }
+          >
             <ChevronLeft />
           </Button>
           <span className="min-w-40 text-center text-sm font-medium capitalize">{label}</span>
-          <Button variant="ghost" size="icon" aria-label="Próximo período" onClick={() => setCursor((c) => (period === "semana" ? addWeeks(c, 1) : addMonths(c, 1)))}>
+          <Button
+            variant="ghost"
+            size="icon"
+            aria-label="Próximo período"
+            onClick={() =>
+              setCursor((c) => (period === "semana" ? addWeeks(c, 1) : addMonths(c, 1)))
+            }
+          >
             <ChevronRight />
           </Button>
         </div>
@@ -130,40 +149,71 @@ function Relatorios() {
 
       <div className="grid grid-cols-2 gap-4 lg:grid-cols-4">
         <Stat label="Concluídas no período" value={String(data.completed.length)} />
-        <Stat label="Pendentes agora" value={String(data.pending.length)} hint={data.overdue.length ? `${data.overdue.length} atrasada(s)` : undefined} />
+        <Stat
+          label="Pendentes agora"
+          value={String(data.pending.length)}
+          hint={data.overdue.length ? `${data.overdue.length} atrasada(s)` : undefined}
+        />
         <Stat label="Hábitos realizados" value={String(data.logsInPeriod.length)} />
         <Stat
           label="Constância dos hábitos"
           value={data.scheduled ? `${Math.round((data.done / data.scheduled) * 100)}%` : "—"}
-          hint={data.scheduled ? `${data.done} de ${data.scheduled} dias programados` : "Sem hábitos programados no período"}
+          hint={
+            data.scheduled
+              ? `${data.done} de ${data.scheduled} dias programados`
+              : "Sem hábitos programados no período"
+          }
         />
       </div>
 
       <Panel title="Resumo de produtividade" className="mt-4">
         {!periodHasActivity ? (
-          <p className="text-sm text-muted-foreground">Nenhuma tarefa concluída ou hábito registrado neste período.</p>
+          <p className="text-sm text-muted-foreground">
+            Nenhuma tarefa concluída ou hábito registrado neste período.
+          </p>
         ) : (
           <>
             <div className="flex h-40 items-end gap-1">
               {data.days.map((d) => (
-                <div key={d.key} className="flex h-full flex-1 flex-col items-center justify-end gap-1">
-                  <div className="flex w-full max-w-8 flex-col justify-end overflow-hidden rounded-t" style={{ height: `${((d.tasks + d.habits) / maxDay) * 100}%` }}>
-                    <div className="bg-sky" style={{ flexGrow: d.tasks }} title={`${d.tasks} tarefa(s)`} />
-                    <div className="bg-sage" style={{ flexGrow: d.habits }} title={`${d.habits} hábito(s)`} />
+                <div
+                  key={d.key}
+                  className="flex h-full flex-1 flex-col items-center justify-end gap-1"
+                >
+                  <div
+                    className="flex w-full max-w-8 flex-col justify-end overflow-hidden rounded-t"
+                    style={{ height: `${((d.tasks + d.habits) / maxDay) * 100}%` }}
+                  >
+                    <div
+                      className="bg-sky"
+                      style={{ flexGrow: d.tasks }}
+                      title={`${d.tasks} tarefa(s)`}
+                    />
+                    <div
+                      className="bg-sage"
+                      style={{ flexGrow: d.habits }}
+                      title={`${d.habits} hábito(s)`}
+                    />
                   </div>
                 </div>
               ))}
             </div>
             <div className="mt-1 flex gap-1">
               {data.days.map((d) => (
-                <span key={d.key} className="flex-1 truncate text-center text-[10px] capitalize text-muted-foreground">
+                <span
+                  key={d.key}
+                  className="flex-1 truncate text-center text-[10px] capitalize text-muted-foreground"
+                >
                   {period === "mes" && Number(d.label) % 5 !== 1 ? "" : d.label}
                 </span>
               ))}
             </div>
             <div className="mt-3 flex gap-4 text-xs text-muted-foreground">
-              <span className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-sm bg-sky" /> Tarefas concluídas</span>
-              <span className="inline-flex items-center gap-1.5"><span className="h-2.5 w-2.5 rounded-sm bg-sage" /> Hábitos realizados</span>
+              <span className="inline-flex items-center gap-1.5">
+                <span className="h-2.5 w-2.5 rounded-sm bg-sky" /> Tarefas concluídas
+              </span>
+              <span className="inline-flex items-center gap-1.5">
+                <span className="h-2.5 w-2.5 rounded-sm bg-sage" /> Hábitos realizados
+              </span>
             </div>
           </>
         )}
@@ -182,7 +232,8 @@ function Relatorios() {
                   <div className="mb-1 flex justify-between gap-2 text-sm">
                     <span className="truncate">{g.title}</span>
                     <span className="shrink-0 text-xs text-muted-foreground">
-                      {GOAL_STATUS_LABEL[g.status as GoalStatus]} · {p === null ? "sem tarefas vinculadas" : `${p}%`}
+                      {GOAL_STATUS_LABEL[g.status as GoalStatus]} ·{" "}
+                      {p === null ? "sem tarefas vinculadas" : `${p}%`}
                     </span>
                   </div>
                   {p !== null && <ProgressBar value={p} />}

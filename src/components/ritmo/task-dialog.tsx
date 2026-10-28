@@ -157,7 +157,11 @@ function TaskDetailsDialog({
         <DialogHeader>
           <DialogTitle className="pr-6">{task.title}</DialogTitle>
           <DialogDescription>
-            {task.status === "concluida" ? "Concluída" : overdue ? "Pendente · atrasada" : "Pendente"}
+            {task.status === "concluida"
+              ? "Concluída"
+              : overdue
+                ? "Pendente · atrasada"
+                : "Pendente"}
           </DialogDescription>
         </DialogHeader>
         <div className="space-y-3 text-sm">
@@ -262,7 +266,10 @@ function TaskFormDialog({
   const [saving, setSaving] = useState(false);
 
   const knownTags = useMemo(
-    () => Array.from(new Set(tasks.flatMap((x) => x.tags))).filter((x) => !tags.includes(x)).sort(),
+    () =>
+      Array.from(new Set(tasks.flatMap((x) => x.tags)))
+        .filter((x) => !tags.includes(x))
+        .sort(),
     [tasks, tags],
   );
 
@@ -341,13 +348,28 @@ function TaskFormDialog({
           </Field>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-3">
             <Field label="Data" error={errors.dueDate} htmlFor="task-date">
-              <Input id="task-date" type="date" value={dueDate} onChange={(e) => setDueDate(e.target.value)} />
+              <Input
+                id="task-date"
+                type="date"
+                value={dueDate}
+                onChange={(e) => setDueDate(e.target.value)}
+              />
             </Field>
             <Field label="Início" htmlFor="task-start">
-              <Input id="task-start" type="time" value={start} onChange={(e) => setStart(e.target.value)} />
+              <Input
+                id="task-start"
+                type="time"
+                value={start}
+                onChange={(e) => setStart(e.target.value)}
+              />
             </Field>
             <Field label="Fim" error={errors.end} htmlFor="task-end">
-              <Input id="task-end" type="time" value={end} onChange={(e) => setEnd(e.target.value)} />
+              <Input
+                id="task-end"
+                type="time"
+                value={end}
+                onChange={(e) => setEnd(e.target.value)}
+              />
             </Field>
           </div>
           <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
