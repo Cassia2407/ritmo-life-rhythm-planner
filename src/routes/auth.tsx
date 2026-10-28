@@ -64,7 +64,7 @@ function AuthPage() {
           email,
           password,
           options: {
-            emailRedirectTo: window.location.origin + "/inicio",
+            emailRedirectTo: window.location.origin + "/auth",
             data: { display_name: name.trim() },
           },
         });
