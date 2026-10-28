@@ -14,6 +14,7 @@ import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/
 import { Route as AuthRouteImport } from './routes/auth'
 import { Route as ResetPasswordRouteImport } from './routes/reset-password'
 import { Route as AuthenticatedShellRouteRouteImport } from './routes/_authenticated/_shell/route'
+import { Route as AuthenticatedShellCalendarioRouteImport } from './routes/_authenticated/_shell/calendario'
 import { Route as AuthenticatedShellInicioRouteImport } from './routes/_authenticated/_shell/inicio'
 import { Route as AuthenticatedShellTarefasRouteImport } from './routes/_authenticated/_shell/tarefas'
 
@@ -40,6 +41,12 @@ const AuthenticatedShellRouteRoute = AuthenticatedShellRouteRouteImport.update({
   id: '/_shell',
   getParentRoute: () => AuthenticatedRouteRoute,
 } as any)
+const AuthenticatedShellCalendarioRoute =
+  AuthenticatedShellCalendarioRouteImport.update({
+    id: '/calendario',
+    path: '/calendario',
+    getParentRoute: () => AuthenticatedShellRouteRoute,
+  } as any)
 const AuthenticatedShellInicioRoute =
   AuthenticatedShellInicioRouteImport.update({
     id: '/inicio',
@@ -57,6 +64,7 @@ export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/calendario': typeof AuthenticatedShellCalendarioRoute
   '/inicio': typeof AuthenticatedShellInicioRoute
   '/tarefas': typeof AuthenticatedShellTarefasRoute
 }
@@ -64,6 +72,7 @@ export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
+  '/calendario': typeof AuthenticatedShellCalendarioRoute
   '/inicio': typeof AuthenticatedShellInicioRoute
   '/tarefas': typeof AuthenticatedShellTarefasRoute
 }
@@ -74,14 +83,16 @@ export interface FileRoutesById {
   '/auth': typeof AuthRoute
   '/reset-password': typeof ResetPasswordRoute
   '/_authenticated/_shell': typeof AuthenticatedShellRouteRouteWithChildren
+  '/_authenticated/_shell/calendario': typeof AuthenticatedShellCalendarioRoute
   '/_authenticated/_shell/inicio': typeof AuthenticatedShellInicioRoute
   '/_authenticated/_shell/tarefas': typeof AuthenticatedShellTarefasRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/' | '/auth' | '/reset-password' | '/inicio' | '/tarefas'
+  fullPaths:
+    '/' | '/auth' | '/reset-password' | '/calendario' | '/inicio' | '/tarefas'
   fileRoutesByTo: FileRoutesByTo
-  to: '/' | '/auth' | '/reset-password' | '/inicio' | '/tarefas'
+  to: '/' | '/auth' | '/reset-password' | '/calendario' | '/inicio' | '/tarefas'
   id:
     | '__root__'
     | '/'
@@ -89,6 +100,7 @@ export interface FileRouteTypes {
     | '/auth'
     | '/reset-password'
     | '/_authenticated/_shell'
+    | '/_authenticated/_shell/calendario'
     | '/_authenticated/_shell/inicio'
     | '/_authenticated/_shell/tarefas'
   fileRoutesById: FileRoutesById
@@ -137,6 +149,13 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof AuthenticatedShellRouteRouteImport
       parentRoute: typeof AuthenticatedRouteRoute
     }
+    '/_authenticated/_shell/calendario': {
+      id: '/_authenticated/_shell/calendario'
+      path: '/calendario'
+      fullPath: '/calendario'
+      preLoaderRoute: typeof AuthenticatedShellCalendarioRouteImport
+      parentRoute: typeof AuthenticatedShellRouteRoute
+    }
     '/_authenticated/_shell/inicio': {
       id: '/_authenticated/_shell/inicio'
       path: '/inicio'
@@ -155,12 +174,14 @@ declare module '@tanstack/react-router' {
 }
 
 interface AuthenticatedShellRouteRouteChildren {
+  AuthenticatedShellCalendarioRoute: typeof AuthenticatedShellCalendarioRoute
   AuthenticatedShellInicioRoute: typeof AuthenticatedShellInicioRoute
   AuthenticatedShellTarefasRoute: typeof AuthenticatedShellTarefasRoute
 }
 
 const AuthenticatedShellRouteRouteChildren: AuthenticatedShellRouteRouteChildren =
   {
+    AuthenticatedShellCalendarioRoute: AuthenticatedShellCalendarioRoute,
     AuthenticatedShellInicioRoute: AuthenticatedShellInicioRoute,
     AuthenticatedShellTarefasRoute: AuthenticatedShellTarefasRoute,
   }
