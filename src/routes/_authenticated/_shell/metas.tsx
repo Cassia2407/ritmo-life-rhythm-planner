@@ -175,7 +175,7 @@ function Metas() {
   );
 }
 
-function GoalForm({ goal, onClose }: { goal?: Goal; onClose: () => void }) {
+function GoalForm({ goal, onClose }: { goal?: Goal | undefined; onClose: () => void }) {
   const invalidate = useInvalidate();
   const [title, setTitle] = useState(goal?.title ?? "");
   const [description, setDescription] = useState(goal?.description ?? "");
