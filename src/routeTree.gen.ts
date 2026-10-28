@@ -10,33 +10,193 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AuthenticatedRouteRouteImport } from './routes/_authenticated/route'
+import { Route as AuthRouteImport } from './routes/auth'
+import { Route as ResetPasswordRouteImport } from './routes/reset-password'
+import { Route as AuthenticatedShellRouteRouteImport } from './routes/_authenticated/_shell/route'
+import { Route as AuthenticatedShellAjudaRouteImport } from './routes/_authenticated/_shell/ajuda'
+import { Route as AuthenticatedShellCalendarioRouteImport } from './routes/_authenticated/_shell/calendario'
+import { Route as AuthenticatedShellConfiguracoesRouteImport } from './routes/_authenticated/_shell/configuracoes'
+import { Route as AuthenticatedShellHabitosRouteImport } from './routes/_authenticated/_shell/habitos'
+import { Route as AuthenticatedShellInicioRouteImport } from './routes/_authenticated/_shell/inicio'
+import { Route as AuthenticatedShellMetasRouteImport } from './routes/_authenticated/_shell/metas'
+import { Route as AuthenticatedShellPerfilRouteImport } from './routes/_authenticated/_shell/perfil'
+import { Route as AuthenticatedShellRelatoriosRouteImport } from './routes/_authenticated/_shell/relatorios'
+import { Route as AuthenticatedShellTarefasRouteImport } from './routes/_authenticated/_shell/tarefas'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AuthenticatedRouteRoute = AuthenticatedRouteRouteImport.update({
+  id: '/_authenticated',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthRoute = AuthRouteImport.update({
+  id: '/auth',
+  path: '/auth',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ResetPasswordRoute = ResetPasswordRouteImport.update({
+  id: '/reset-password',
+  path: '/reset-password',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthenticatedShellRouteRoute = AuthenticatedShellRouteRouteImport.update({
+  id: '/_shell',
+  getParentRoute: () => AuthenticatedRouteRoute,
+} as any)
+const AuthenticatedShellAjudaRoute = AuthenticatedShellAjudaRouteImport.update({
+  id: '/ajuda',
+  path: '/ajuda',
+  getParentRoute: () => AuthenticatedShellRouteRoute,
+} as any)
+const AuthenticatedShellCalendarioRoute =
+  AuthenticatedShellCalendarioRouteImport.update({
+    id: '/calendario',
+    path: '/calendario',
+    getParentRoute: () => AuthenticatedShellRouteRoute,
+  } as any)
+const AuthenticatedShellConfiguracoesRoute =
+  AuthenticatedShellConfiguracoesRouteImport.update({
+    id: '/configuracoes',
+    path: '/configuracoes',
+    getParentRoute: () => AuthenticatedShellRouteRoute,
+  } as any)
+const AuthenticatedShellHabitosRoute =
+  AuthenticatedShellHabitosRouteImport.update({
+    id: '/habitos',
+    path: '/habitos',
+    getParentRoute: () => AuthenticatedShellRouteRoute,
+  } as any)
+const AuthenticatedShellInicioRoute =
+  AuthenticatedShellInicioRouteImport.update({
+    id: '/inicio',
+    path: '/inicio',
+    getParentRoute: () => AuthenticatedShellRouteRoute,
+  } as any)
+const AuthenticatedShellMetasRoute = AuthenticatedShellMetasRouteImport.update({
+  id: '/metas',
+  path: '/metas',
+  getParentRoute: () => AuthenticatedShellRouteRoute,
+} as any)
+const AuthenticatedShellPerfilRoute =
+  AuthenticatedShellPerfilRouteImport.update({
+    id: '/perfil',
+    path: '/perfil',
+    getParentRoute: () => AuthenticatedShellRouteRoute,
+  } as any)
+const AuthenticatedShellRelatoriosRoute =
+  AuthenticatedShellRelatoriosRouteImport.update({
+    id: '/relatorios',
+    path: '/relatorios',
+    getParentRoute: () => AuthenticatedShellRouteRoute,
+  } as any)
+const AuthenticatedShellTarefasRoute =
+  AuthenticatedShellTarefasRouteImport.update({
+    id: '/tarefas',
+    path: '/tarefas',
+    getParentRoute: () => AuthenticatedShellRouteRoute,
+  } as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/ajuda': typeof AuthenticatedShellAjudaRoute
+  '/calendario': typeof AuthenticatedShellCalendarioRoute
+  '/configuracoes': typeof AuthenticatedShellConfiguracoesRoute
+  '/habitos': typeof AuthenticatedShellHabitosRoute
+  '/inicio': typeof AuthenticatedShellInicioRoute
+  '/metas': typeof AuthenticatedShellMetasRoute
+  '/perfil': typeof AuthenticatedShellPerfilRoute
+  '/relatorios': typeof AuthenticatedShellRelatoriosRoute
+  '/tarefas': typeof AuthenticatedShellTarefasRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/auth': typeof AuthRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/ajuda': typeof AuthenticatedShellAjudaRoute
+  '/calendario': typeof AuthenticatedShellCalendarioRoute
+  '/configuracoes': typeof AuthenticatedShellConfiguracoesRoute
+  '/habitos': typeof AuthenticatedShellHabitosRoute
+  '/inicio': typeof AuthenticatedShellInicioRoute
+  '/metas': typeof AuthenticatedShellMetasRoute
+  '/perfil': typeof AuthenticatedShellPerfilRoute
+  '/relatorios': typeof AuthenticatedShellRelatoriosRoute
+  '/tarefas': typeof AuthenticatedShellTarefasRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/_authenticated': typeof AuthenticatedRouteRouteWithChildren
+  '/auth': typeof AuthRoute
+  '/reset-password': typeof ResetPasswordRoute
+  '/_authenticated/_shell': typeof AuthenticatedShellRouteRouteWithChildren
+  '/_authenticated/_shell/ajuda': typeof AuthenticatedShellAjudaRoute
+  '/_authenticated/_shell/calendario': typeof AuthenticatedShellCalendarioRoute
+  '/_authenticated/_shell/configuracoes': typeof AuthenticatedShellConfiguracoesRoute
+  '/_authenticated/_shell/habitos': typeof AuthenticatedShellHabitosRoute
+  '/_authenticated/_shell/inicio': typeof AuthenticatedShellInicioRoute
+  '/_authenticated/_shell/metas': typeof AuthenticatedShellMetasRoute
+  '/_authenticated/_shell/perfil': typeof AuthenticatedShellPerfilRoute
+  '/_authenticated/_shell/relatorios': typeof AuthenticatedShellRelatoriosRoute
+  '/_authenticated/_shell/tarefas': typeof AuthenticatedShellTarefasRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/auth'
+    | '/reset-password'
+    | '/ajuda'
+    | '/calendario'
+    | '/configuracoes'
+    | '/habitos'
+    | '/inicio'
+    | '/metas'
+    | '/perfil'
+    | '/relatorios'
+    | '/tarefas'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/auth'
+    | '/reset-password'
+    | '/ajuda'
+    | '/calendario'
+    | '/configuracoes'
+    | '/habitos'
+    | '/inicio'
+    | '/metas'
+    | '/perfil'
+    | '/relatorios'
+    | '/tarefas'
+  id:
+    | '__root__'
+    | '/'
+    | '/_authenticated'
+    | '/auth'
+    | '/reset-password'
+    | '/_authenticated/_shell'
+    | '/_authenticated/_shell/ajuda'
+    | '/_authenticated/_shell/calendario'
+    | '/_authenticated/_shell/configuracoes'
+    | '/_authenticated/_shell/habitos'
+    | '/_authenticated/_shell/inicio'
+    | '/_authenticated/_shell/metas'
+    | '/_authenticated/_shell/perfil'
+    | '/_authenticated/_shell/relatorios'
+    | '/_authenticated/_shell/tarefas'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AuthenticatedRouteRoute: typeof AuthenticatedRouteRouteWithChildren
+  AuthRoute: typeof AuthRoute
+  ResetPasswordRoute: typeof ResetPasswordRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +208,146 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/_authenticated': {
+      id: '/_authenticated'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedRouteRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth': {
+      id: '/auth'
+      path: '/auth'
+      fullPath: '/auth'
+      preLoaderRoute: typeof AuthRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/reset-password': {
+      id: '/reset-password'
+      path: '/reset-password'
+      fullPath: '/reset-password'
+      preLoaderRoute: typeof ResetPasswordRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/_authenticated/_shell': {
+      id: '/_authenticated/_shell'
+      path: ''
+      fullPath: '/'
+      preLoaderRoute: typeof AuthenticatedShellRouteRouteImport
+      parentRoute: typeof AuthenticatedRouteRoute
+    }
+    '/_authenticated/_shell/ajuda': {
+      id: '/_authenticated/_shell/ajuda'
+      path: '/ajuda'
+      fullPath: '/ajuda'
+      preLoaderRoute: typeof AuthenticatedShellAjudaRouteImport
+      parentRoute: typeof AuthenticatedShellRouteRoute
+    }
+    '/_authenticated/_shell/calendario': {
+      id: '/_authenticated/_shell/calendario'
+      path: '/calendario'
+      fullPath: '/calendario'
+      preLoaderRoute: typeof AuthenticatedShellCalendarioRouteImport
+      parentRoute: typeof AuthenticatedShellRouteRoute
+    }
+    '/_authenticated/_shell/configuracoes': {
+      id: '/_authenticated/_shell/configuracoes'
+      path: '/configuracoes'
+      fullPath: '/configuracoes'
+      preLoaderRoute: typeof AuthenticatedShellConfiguracoesRouteImport
+      parentRoute: typeof AuthenticatedShellRouteRoute
+    }
+    '/_authenticated/_shell/habitos': {
+      id: '/_authenticated/_shell/habitos'
+      path: '/habitos'
+      fullPath: '/habitos'
+      preLoaderRoute: typeof AuthenticatedShellHabitosRouteImport
+      parentRoute: typeof AuthenticatedShellRouteRoute
+    }
+    '/_authenticated/_shell/inicio': {
+      id: '/_authenticated/_shell/inicio'
+      path: '/inicio'
+      fullPath: '/inicio'
+      preLoaderRoute: typeof AuthenticatedShellInicioRouteImport
+      parentRoute: typeof AuthenticatedShellRouteRoute
+    }
+    '/_authenticated/_shell/metas': {
+      id: '/_authenticated/_shell/metas'
+      path: '/metas'
+      fullPath: '/metas'
+      preLoaderRoute: typeof AuthenticatedShellMetasRouteImport
+      parentRoute: typeof AuthenticatedShellRouteRoute
+    }
+    '/_authenticated/_shell/perfil': {
+      id: '/_authenticated/_shell/perfil'
+      path: '/perfil'
+      fullPath: '/perfil'
+      preLoaderRoute: typeof AuthenticatedShellPerfilRouteImport
+      parentRoute: typeof AuthenticatedShellRouteRoute
+    }
+    '/_authenticated/_shell/relatorios': {
+      id: '/_authenticated/_shell/relatorios'
+      path: '/relatorios'
+      fullPath: '/relatorios'
+      preLoaderRoute: typeof AuthenticatedShellRelatoriosRouteImport
+      parentRoute: typeof AuthenticatedShellRouteRoute
+    }
+    '/_authenticated/_shell/tarefas': {
+      id: '/_authenticated/_shell/tarefas'
+      path: '/tarefas'
+      fullPath: '/tarefas'
+      preLoaderRoute: typeof AuthenticatedShellTarefasRouteImport
+      parentRoute: typeof AuthenticatedShellRouteRoute
+    }
   }
 }
 
+interface AuthenticatedShellRouteRouteChildren {
+  AuthenticatedShellAjudaRoute: typeof AuthenticatedShellAjudaRoute
+  AuthenticatedShellCalendarioRoute: typeof AuthenticatedShellCalendarioRoute
+  AuthenticatedShellConfiguracoesRoute: typeof AuthenticatedShellConfiguracoesRoute
+  AuthenticatedShellHabitosRoute: typeof AuthenticatedShellHabitosRoute
+  AuthenticatedShellInicioRoute: typeof AuthenticatedShellInicioRoute
+  AuthenticatedShellMetasRoute: typeof AuthenticatedShellMetasRoute
+  AuthenticatedShellPerfilRoute: typeof AuthenticatedShellPerfilRoute
+  AuthenticatedShellRelatoriosRoute: typeof AuthenticatedShellRelatoriosRoute
+  AuthenticatedShellTarefasRoute: typeof AuthenticatedShellTarefasRoute
+}
+
+const AuthenticatedShellRouteRouteChildren: AuthenticatedShellRouteRouteChildren =
+  {
+    AuthenticatedShellAjudaRoute: AuthenticatedShellAjudaRoute,
+    AuthenticatedShellCalendarioRoute: AuthenticatedShellCalendarioRoute,
+    AuthenticatedShellConfiguracoesRoute: AuthenticatedShellConfiguracoesRoute,
+    AuthenticatedShellHabitosRoute: AuthenticatedShellHabitosRoute,
+    AuthenticatedShellInicioRoute: AuthenticatedShellInicioRoute,
+    AuthenticatedShellMetasRoute: AuthenticatedShellMetasRoute,
+    AuthenticatedShellPerfilRoute: AuthenticatedShellPerfilRoute,
+    AuthenticatedShellRelatoriosRoute: AuthenticatedShellRelatoriosRoute,
+    AuthenticatedShellTarefasRoute: AuthenticatedShellTarefasRoute,
+  }
+
+const AuthenticatedShellRouteRouteWithChildren =
+  AuthenticatedShellRouteRoute._addFileChildren(
+    AuthenticatedShellRouteRouteChildren,
+  )
+
+interface AuthenticatedRouteRouteChildren {
+  AuthenticatedShellRouteRoute: typeof AuthenticatedShellRouteRouteWithChildren
+}
+
+const AuthenticatedRouteRouteChildren: AuthenticatedRouteRouteChildren = {
+  AuthenticatedShellRouteRoute: AuthenticatedShellRouteRouteWithChildren,
+}
+
+const AuthenticatedRouteRouteWithChildren =
+  AuthenticatedRouteRoute._addFileChildren(AuthenticatedRouteRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AuthenticatedRouteRoute: AuthenticatedRouteRouteWithChildren,
+  AuthRoute: AuthRoute,
+  ResetPasswordRoute: ResetPasswordRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)
