@@ -21,6 +21,7 @@ import { Sheet, SheetContent, SheetHeader, SheetTitle } from "@/components/ui/sh
 import { supabase } from "@/integrations/supabase/client";
 import { useTaskDialog } from "./task-dialog";
 import { cn } from "@/lib/utils";
+import logoAsset from "@/assets/ritmo-logo.png.asset.json";
 
 type NavItem = { to: string; label: string; icon: LucideIcon };
 
@@ -52,15 +53,8 @@ export function useSignOut() {
 
 function Logo() {
   return (
-    <Link to="/inicio" className="flex items-center gap-2 font-semibold tracking-tight">
-      <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-sky-soft">
-        <span className="flex gap-0.5">
-          <span className="h-3 w-1 rounded-full bg-sky" />
-          <span className="h-4 w-1 rounded-full bg-sage" />
-          <span className="h-2.5 w-1 rounded-full bg-sky" />
-        </span>
-      </span>
-      <span className="text-lg">Ritmo</span>
+    <Link to="/inicio" className="flex items-center" aria-label="Ritmo — início">
+      <img src={logoAsset.url} alt="Ritmo" className="h-9 w-auto" />
     </Link>
   );
 }

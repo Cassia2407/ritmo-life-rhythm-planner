@@ -1,6 +1,7 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { CalendarDays, CheckSquare, Repeat, Target } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logoAsset from "@/assets/ritmo-logo.png.asset.json";
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -38,16 +39,7 @@ function Landing() {
   return (
     <div className="min-h-screen bg-background">
       <header className="mx-auto flex max-w-5xl items-center justify-between px-6 py-6">
-        <span className="flex items-center gap-2 text-lg font-semibold tracking-tight">
-          <span className="flex h-8 w-8 items-center justify-center rounded-lg bg-sky-soft">
-            <span className="flex gap-0.5">
-              <span className="h-3 w-1 rounded-full bg-sky" />
-              <span className="h-4 w-1 rounded-full bg-sage" />
-              <span className="h-2.5 w-1 rounded-full bg-sky" />
-            </span>
-          </span>
-          Ritmo
-        </span>
+        <img src={logoAsset.url} alt="Ritmo" className="h-10 w-auto" />
         <Button variant="ghost" asChild>
           <Link to="/auth">Entrar</Link>
         </Button>
