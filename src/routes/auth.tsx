@@ -6,6 +6,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { supabase } from "@/integrations/supabase/client";
 import { lovable } from "@/integrations/lovable";
+import logoAsset from "@/assets/ritmo-logo.png.asset.json";
 
 type Mode = "signin" | "signup" | "forgot";
 
@@ -130,8 +131,8 @@ function AuthPage() {
   return (
     <div className="flex min-h-screen items-center justify-center bg-background px-4 py-10">
       <div className="w-full max-w-sm">
-        <Link to="/" className="mb-8 flex items-center justify-center gap-2 text-lg font-semibold">
-          Ritmo
+        <Link to="/" className="mb-8 flex items-center justify-center" aria-label="Ritmo">
+          <img src={logoAsset.url} alt="Ritmo" className="h-12 w-auto" />
         </Link>
         <div className="rounded-2xl border bg-card p-6 shadow-soft">
           <h1 className="text-xl font-semibold">{titles[mode]}</h1>
